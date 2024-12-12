@@ -42,7 +42,6 @@ export async function getContacts() {
   try {
     const dbConnect = await connectDB()
     const queryTable = await dbConnect.request().query(`SELECT * FROM [contacts] INNER JOIN [customers] ON [contacts].[customer_id] = [customers].[id]`)
-    // console.log(queryTable);
     return { data: queryTable.recordset }
   } catch (error) {
     console.error(error)
