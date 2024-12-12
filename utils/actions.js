@@ -25,7 +25,8 @@ const config = {
   }
 };
 
-export async function connectDB() {
+async function connectDB() {
+  console.log("in connection");
   try {
     const poolConnection = await sql.connect(config)
     return poolConnection
@@ -37,10 +38,12 @@ export async function connectDB() {
 
 export async function getContacts() {
 
-  const session = await getServerSession(authOptions)
+  // const session = await getServerSession(authOptions)
 
   try {
+    console.log("before connection");
     const dbConnect = await connectDB()
+    console.log("after connection");
     const queryTable = await dbConnect.request().query(`SELECT * FROM [contacts] INNER JOIN [customers] ON [contacts].[customer_id] = [customers].[id]`)
     return { data: queryTable.recordset }
   } catch (error) {
